@@ -1,0 +1,8 @@
+#timer {
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+#timer.ready {
+    color: green;
+}
