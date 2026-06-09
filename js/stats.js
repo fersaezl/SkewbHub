@@ -30,3 +30,7 @@ function ao12() {
     const trimmed = sorted.slice(1, 11);
     return trimmed.reduce((sum, t) => sum + t, 0) / 10;
 }
+
+function clearTimes() {
+    times.length = 0;
+}

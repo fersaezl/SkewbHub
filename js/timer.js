@@ -121,3 +121,11 @@ $(document).on('touchend', function (e) {
 });
 
 $('#timer-status').text(msgStart);
+
+$('#btn-clear').on('click', function () {
+    clearTimes();
+    $('#times-body').empty();
+    $('#ao5').text('-');
+    $('#ao12').text('-');
+    $('#pb').text('-');
+});
