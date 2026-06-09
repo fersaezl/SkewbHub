@@ -65,7 +65,7 @@ function stopTimer() {
         ao12Text = '-';
     }
 
-    $('#times-body').prepend('<tr><td>' + index + '</td><td>' + time + '</td><td>' + ao5Text + '</td><td>' + ao12Text + '</td></tr>');
+    renderTable();
 }
 
 function resetTimer() {
@@ -90,7 +90,7 @@ $(document).on('keydown', function (e) {
     }
 });
 
-document.addEventListener('touchstart', function (e) {
+document.getElementById('timer-section').addEventListener('touchstart', function (e) {
     e.preventDefault();
     if (isRunning) {
         stopTimer();
@@ -124,8 +124,35 @@ $('#timer-status').text(msgStart);
 
 $('#btn-clear').on('click', function () {
     clearTimes();
+    resetTimer();
     $('#times-body').empty();
     $('#ao5').text('-');
     $('#ao12').text('-');
     $('#pb').text('-');
+});
+
+$(document).on('click', '.clickable-row', function () {
+    const index = $(this).data('index');
+    if (confirm('Delete this time?')) {
+        times.splice(index, 1);
+        renderTable();
+
+        if (ao5() !== null) {
+            $('#ao5').text((ao5() / 1000).toFixed(2));
+        } else {
+            $('#ao5').text('-');
+        }
+
+        if (ao12() !== null) {
+            $('#ao12').text((ao12() / 1000).toFixed(2));
+        } else {
+            $('#ao12').text('-');
+        }
+
+        if (times.length > 0) {
+            $('#pb').text((pb() / 1000).toFixed(2));
+        } else {
+            $('#pb').text('-');
+        }
+    }
 });
