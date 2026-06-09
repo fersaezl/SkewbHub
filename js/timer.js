@@ -3,6 +3,16 @@ let startTime = null;
 let elapsedTime = 0;
 let isRunning = false;
 let isReady = false;
+let msgStart;
+let msgStop;
+
+if ('ontouchstart' in window) {
+    msgStart = 'Hold to start';
+    msgStop = 'Tap to stop';
+} else {
+    msgStart = 'Press space to start';
+    msgStop = 'Press space to stop';
+}
 
 function updateDisplay() {
     let seconds = (elapsedTime / 1000).toFixed(2);
@@ -16,13 +26,13 @@ function startTimer() {
         updateDisplay();
     }, 10);
     isRunning = true;
-    $('#timer-status').text('Press space to stop');
+    $('#timer-status').text(msgStop);
 }
 
 function stopTimer() {
     clearInterval(timerInterval);
     isRunning = false;
-    $('#timer-status').text('Press space to start');
+    $('#timer-status').text(msgStart);
 }
 
 function resetTimer() {
@@ -30,7 +40,7 @@ function resetTimer() {
     elapsedTime = 0;
     isRunning = false;
     updateDisplay();
-    $('#timer-status').text('Press space to start');
+    $('#timer-status').text(msgStart);
 }
 
 $(document).on('keydown', function (e) {
@@ -76,3 +86,5 @@ $(document).on('touchend', function (e) {
         startTimer();
     }
 });
+
+$('#timer-status').text(msgStart);
