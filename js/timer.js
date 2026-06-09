@@ -47,6 +47,25 @@ function stopTimer() {
     }
 
     $('#pb').text((pb() / 1000).toFixed(2));
+
+    const index = times.length;
+    const time = (elapsedTime / 1000).toFixed(2);
+
+    let ao5Text;
+    if (ao5() !== null) {
+        ao5Text = (ao5() / 1000).toFixed(2);
+    } else {
+        ao5Text = '-';
+    }
+
+    let ao12Text;
+    if (ao12() !== null) {
+        ao12Text = (ao12() / 1000).toFixed(2);
+    } else {
+        ao12Text = '-';
+    }
+
+    $('#times-body').prepend('<tr><td>' + index + '</td><td>' + time + '</td><td>' + ao5Text + '</td><td>' + ao12Text + '</td></tr>');
 }
 
 function resetTimer() {
