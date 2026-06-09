@@ -33,6 +33,20 @@ function stopTimer() {
     clearInterval(timerInterval);
     isRunning = false;
     $('#timer-status').text(msgStart);
+    addTime(elapsedTime);
+    if (ao5() !== null) {
+        $('#ao5').text((ao5() / 1000).toFixed(2));
+    } else {
+        $('#ao5').text('-');
+    }
+
+    if (ao12() !== null) {
+        $('#ao12').text((ao12() / 1000).toFixed(2));
+    } else {
+        $('#ao12').text('-');
+    }
+
+    $('#pb').text((pb() / 1000).toFixed(2));
 }
 
 function resetTimer() {
