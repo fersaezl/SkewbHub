@@ -47,6 +47,18 @@ $(document).on('keydown', function (e) {
     }
 });
 
+document.addEventListener('touchstart', function (e) {
+    e.preventDefault();
+    if (isRunning) {
+        stopTimer();
+    } else if (!isReady) {
+        resetTimer();
+        isReady = true;
+        $('#timer').addClass('ready');
+        $('#timer-status').text('Release to start');
+    }
+}, { passive: false });
+
 $(document).on('keyup', function (e) {
     if (e.code === 'Space') {
         if (isReady) {
@@ -54,5 +66,13 @@ $(document).on('keyup', function (e) {
             $('#timer').removeClass('ready');
             startTimer();
         }
+    }
+});
+
+$(document).on('touchend', function (e) {
+    if (isReady) {
+        isReady = false;
+        $('#timer').removeClass('ready');
+        startTimer();
     }
 });
