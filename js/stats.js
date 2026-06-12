@@ -2,6 +2,7 @@ const times = [];
 
 function addTime(ms) {
     times.push(ms);
+    localStorage.setItem('times', JSON.stringify(times));
 }
 
 function pb() {
@@ -33,6 +34,7 @@ function ao12() {
 
 function clearTimes() {
     times.length = 0;
+    localStorage.removeItem('times');
 }
 
 function renderTable() {
@@ -118,5 +120,20 @@ function renderTable() {
             '<td class="' + ao12Class + '">' + ao12Text + '</td>' +
             '</tr>'
         );
+    }
+}
+
+const saved = localStorage.getItem('times');
+if (saved) {
+    times.push(...JSON.parse(saved));
+    renderTable();
+    if (ao5() !== null) {
+        $('#ao5').text((ao5() / 1000).toFixed(2));
+    }
+    if (ao12() !== null) {
+        $('#ao12').text((ao12() / 1000).toFixed(2));
+    }
+    if (pb() !== null) {
+        $('#pb').text((pb() / 1000).toFixed(2));
     }
 }
