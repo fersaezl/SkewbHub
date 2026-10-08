@@ -12,24 +12,24 @@ function pb() {
     return Math.min(...times);
 }
 
-function ao5() {
-    if (times.length < 5) {
+// Average of the n solves that end at endIndex (WCA style): the best and the worst are dropped and the rest are averaged. Returns null if there are not enough solves yet.
+function averageAt(n, endIndex) {
+    if (endIndex + 1 < n) {
         return null;
     }
-    const last5 = times.slice(-5);
-    const sorted = [...last5].sort((a, b) => a - b);
-    const trimmed = sorted.slice(1, 4);
-    return trimmed.reduce((sum, t) => sum + t, 0) / 3;
+    const window = times.slice(endIndex + 1 - n, endIndex + 1);
+    const sorted = [...window].sort((a, b) => a - b);
+    const trimmed = sorted.slice(1, n - 1);
+    return trimmed.reduce((sum, t) => sum + t, 0) / trimmed.length;
+}
+
+// Current averages (the last n solves)
+function ao5() {
+    return averageAt(5, times.length - 1);
 }
 
 function ao12() {
-    if (times.length < 12) {
-        return null;
-    }
-    const last12 = times.slice(-12);
-    const sorted = [...last12].sort((a, b) => a - b);
-    const trimmed = sorted.slice(1, 11);
-    return trimmed.reduce((sum, t) => sum + t, 0) / 10;
+    return averageAt(12, times.length - 1);
 }
 
 function clearTimes() {
@@ -37,87 +37,67 @@ function clearTimes() {
     localStorage.removeItem('times');
 }
 
-function renderTable() {
-    $('#times-body').empty();
-    let bestAo5 = null;
-    let bestAo12 = null;
-    for (let i = 0; i < times.length; i++) {
-        const subset = times.slice(0, i + 1);
-        const time = (times[i] / 1000).toFixed(2);
+// Milliseconds to seconds with 2 decimals, or '-' when there is no value
+function formatTime(ms) {
+    if (ms === null) {
+        return '-';
+    }
+    return (ms / 1000).toFixed(2);
+}
 
-        let ao5Text = '-';
-        if (subset.length >= 5) {
-            const last5 = subset.slice(-5);
-            const sorted = [...last5].sort((a, b) => a - b);
-            const trimmed = sorted.slice(1, 4);
-            ao5Text = (trimmed.reduce((sum, t) => sum + t, 0) / 3 / 1000).toFixed(2);
+// Lowest value of a list, ignoring nulls. Values are compared as displayed (2 decimals), so two averages that look the same are both highlighted.
+function bestShown(values) {
+    let best = null;
+    for (let i = 0; i < values.length; i++) {
+        if (values[i] === null) {
+            continue;
         }
-
-        let ao12Text = '-';
-        if (subset.length >= 12) {
-            const last12 = subset.slice(-12);
-            const sorted = [...last12].sort((a, b) => a - b);
-            const trimmed = sorted.slice(1, 11);
-            ao12Text = (trimmed.reduce((sum, t) => sum + t, 0) / 10 / 1000).toFixed(2);
-        }
-
-        if (ao5Text !== '-') {
-            const ao5Val = parseFloat(ao5Text);
-            if (bestAo5 === null || ao5Val < bestAo5) {
-                bestAo5 = ao5Val;
-            }
-        }
-
-        if (ao12Text !== '-') {
-            const ao12Val = parseFloat(ao12Text);
-            if (bestAo12 === null || ao12Val < bestAo12) {
-                bestAo12 = ao12Val;
-            }
+        const shown = parseFloat(formatTime(values[i]));
+        if (best === null || shown < best) {
+            best = shown;
         }
     }
+    return best;
+}
 
+function renderTable() {
+    $('#times-body').empty();
+
+    // ao5 and ao12 as they were after each solve
+    const ao5List = [];
+    const ao12List = [];
+    for (let i = 0; i < times.length; i++) {
+        ao5List.push(averageAt(5, i));
+        ao12List.push(averageAt(12, i));
+    }
+
+    const bestAo5 = bestShown(ao5List);
+    const bestAo12 = bestShown(ao12List);
     const pbVal = pb();
 
+    // Newest solve first, so each row is prepended
     for (let i = 0; i < times.length; i++) {
-        const subset = times.slice(0, i + 1);
-        const time = (times[i] / 1000).toFixed(2);
         let timeClass = '';
         if (times[i] === pbVal) {
             timeClass = 'highlight-pb';
         }
 
-        let ao5Text = '-';
         let ao5Class = '';
-        if (subset.length >= 5) {
-            const last5 = subset.slice(-5);
-            const sorted = [...last5].sort((a, b) => a - b);
-            const trimmed = sorted.slice(1, 4);
-            const ao5Val = trimmed.reduce((sum, t) => sum + t, 0) / 3 / 1000;
-            ao5Text = ao5Val.toFixed(2);
-            if (parseFloat(ao5Text) === bestAo5) {
-                ao5Class = 'highlight-ao';
-            }
+        if (ao5List[i] !== null && parseFloat(formatTime(ao5List[i])) === bestAo5) {
+            ao5Class = 'highlight-ao';
         }
 
-        let ao12Text = '-';
         let ao12Class = '';
-        if (subset.length >= 12) {
-            const last12 = subset.slice(-12);
-            const sorted = [...last12].sort((a, b) => a - b);
-            const trimmed = sorted.slice(1, 11);
-            const ao12Val = trimmed.reduce((sum, t) => sum + t, 0) / 10 / 1000;
-            ao12Text = ao12Val.toFixed(2);
-            if (parseFloat(ao12Text) === bestAo12) {
-                ao12Class = 'highlight-ao';
-            }
+        if (ao12List[i] !== null && parseFloat(formatTime(ao12List[i])) === bestAo12) {
+            ao12Class = 'highlight-ao';
         }
 
         $('#times-body').prepend(
             '<tr class="clickable-row" data-index="' + i + '">' +
             '<td>' + (i + 1) + '</td>' +
-            '<td class="' + timeClass + '">' + time + '</td>' +
-            '<td class="' + ao5Class + '">' + ao5Text + '</td>' +
-            '<td class="' + ao12Class + '">' + ao12Text + '</td>' +
+            '<td class="' + timeClass + '">' + formatTime(times[i]) + '</td>' +
+            '<td class="' + ao5Class + '">' + formatTime(ao5List[i]) + '</td>' +
+            '<td class="' + ao12Class + '">' + formatTime(ao12List[i]) + '</td>' +
             '</tr>'
         );
     }
