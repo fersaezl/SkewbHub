@@ -1,5 +1,5 @@
 # SkewbHub
-<img src="img/SkewbHub Logo.png" alt="SkewbHub logo" width="80">
+<img src="img/logo.png" alt="SkewbHub logo" width="80">
 
 A web-based Skewb timer and algorithm trainer to practice cases and track your times.
 
