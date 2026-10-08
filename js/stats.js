@@ -60,6 +60,13 @@ function bestShown(values) {
     return best;
 }
 
+// Shows ao5, ao12 and pb in the summary under the timer
+function updateSummary() {
+    $('#ao5').text(formatTime(ao5()));
+    $('#ao12').text(formatTime(ao12()));
+    $('#pb').text(formatTime(pb()));
+}
+
 function renderTable() {
     $('#times-body').empty();
 
@@ -107,13 +114,5 @@ const saved = localStorage.getItem('times');
 if (saved) {
     times.push(...JSON.parse(saved));
     renderTable();
-    if (ao5() !== null) {
-        $('#ao5').text((ao5() / 1000).toFixed(2));
-    }
-    if (ao12() !== null) {
-        $('#ao12').text((ao12() / 1000).toFixed(2));
-    }
-    if (pb() !== null) {
-        $('#pb').text((pb() / 1000).toFixed(2));
-    }
+    updateSummary();
 }
