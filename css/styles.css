@@ -7,3 +7,9 @@
     color: #ffc107;
     font-weight: bold;
 }
+
+#skewbs svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}

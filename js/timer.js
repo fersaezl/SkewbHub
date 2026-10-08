@@ -1,3 +1,6 @@
+// Timer state:
+// - isReady: space (or touch) is held down and we wait for the release to start
+// - isRunning: the clock is ticking; the next space (or touch) stops it
 let timerInterval = null;
 let startTime = null;
 let elapsedTime = 0;
@@ -6,6 +9,7 @@ let isReady = false;
 let msgStart;
 let msgStop;
 
+// Different instructions for touch screens
 if ('ontouchstart' in window) {
     msgStart = 'Hold to start';
     msgStop = 'Tap to stop';
@@ -20,6 +24,7 @@ function updateDisplay() {
 }
 
 function startTimer() {
+    // Date.now() instead of counting intervals, because setInterval is not exact
     startTime = Date.now() - elapsedTime;
     timerInterval = setInterval(function () {
         elapsedTime = Date.now() - startTime;
@@ -48,24 +53,12 @@ function stopTimer() {
 
     $('#pb').text((pb() / 1000).toFixed(2));
 
-    const index = times.length;
-    const time = (elapsedTime / 1000).toFixed(2);
-
-    let ao5Text;
-    if (ao5() !== null) {
-        ao5Text = (ao5() / 1000).toFixed(2);
-    } else {
-        ao5Text = '-';
-    }
-
-    let ao12Text;
-    if (ao12() !== null) {
-        ao12Text = (ao12() / 1000).toFixed(2);
-    } else {
-        ao12Text = '-';
-    }
-
     renderTable();
+
+    // newScramble lives in scrambler.js (a module), so it may not exist yet
+    if (window.newScramble) {
+        window.newScramble();
+    }
 }
 
 function resetTimer() {
@@ -76,9 +69,10 @@ function resetTimer() {
     $('#timer-status').text(msgStart);
 }
 
+// Keyboard: press space = ready, release = start, press again = stop
 $(document).on('keydown', function (e) {
     if (e.code === 'Space') {
-        e.preventDefault();
+        e.preventDefault(); // avoid scrolling the page
         if (isRunning) {
             stopTimer();
         } else if (!isReady) {
@@ -90,6 +84,7 @@ $(document).on('keydown', function (e) {
     }
 });
 
+// Touch: same logic as the keyboard. The listener is not passive so that preventDefault() can stop the page from scrolling and the emulated mouse events.
 document.getElementById('timer-section').addEventListener('touchstart', function (e) {
     e.preventDefault();
     if (isRunning) {
@@ -131,10 +126,12 @@ $('#btn-clear').on('click', function () {
     $('#pb').text('-');
 });
 
+// Delegated event, because renderTable() recreates the rows every time. data-index is the position of the time in the times array.
 $(document).on('click', '.clickable-row', function () {
     const index = $(this).data('index');
     if (confirm('Delete this time?')) {
         times.splice(index, 1);
+        localStorage.setItem('times', JSON.stringify(times)); // otherwise the time comes back after reloading
         renderTable();
 
         if (ao5() !== null) {
