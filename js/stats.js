@@ -3,9 +3,24 @@
 // - penalty will be 'none', 'plus2' (+2 seconds) or 'dnf' (did not finish)
 const times = [];
 
+function saveTimes() {
+    localStorage.setItem('times', JSON.stringify(times));
+}
+
 function addTime(ms) {
     times.push({ ms: ms, penalty: 'none' });
-    localStorage.setItem('times', JSON.stringify(times));
+    saveTimes();
+}
+
+// Changes the penalty of one solve: 'none', 'plus2' or 'dnf'
+function setPenalty(index, penalty) {
+    times[index].penalty = penalty;
+    saveTimes();
+}
+
+function deleteTime(index) {
+    times.splice(index, 1);
+    saveTimes();
 }
 
 // The time that counts for a solve, in milliseconds.
@@ -167,7 +182,7 @@ if (saved) {
         }
     }
     // Save right away in the new format
-    localStorage.setItem('times', JSON.stringify(times));
+    saveTimes();
     renderTable();
     updateSummary();
 }
