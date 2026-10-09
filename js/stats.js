@@ -1,14 +1,15 @@
-// Each solve is an object: { ms: 12340, penalty: 'none' }
+// Each solve is an object: { ms: 12340, penalty: 'none', scramble: "R U' L B" }
 // - ms is the time measured by the timer, it is never modified
 // - penalty will be 'none', 'plus2' (+2 seconds) or 'dnf' (did not finish)
+// - scramble is the scramble that was solved ('' for solves saved before it existed)
 const times = [];
 
 function saveTimes() {
     localStorage.setItem('times', JSON.stringify(times));
 }
 
-function addTime(ms) {
-    times.push({ ms: ms, penalty: 'none' });
+function addTime(ms, scramble) {
+    times.push({ ms: ms, penalty: 'none', scramble: scramble || '' });
     saveTimes();
 }
 
@@ -86,7 +87,7 @@ function clearTimes() {
     localStorage.removeItem('times');
 }
 
-// Milliseconds to seconds with 2 decimals, or '-' when there is no value, 'DNF'for a DNF
+// Milliseconds to seconds with 2 decimals, or '-' when there is no value, 'DNF' for a DNF
 function formatTime(ms) {
     if (ms === null) {
         return '-';
@@ -176,7 +177,7 @@ if (saved) {
     const loaded = JSON.parse(saved);
     for (let i = 0; i < loaded.length; i++) {
         if (typeof loaded[i] === 'number') {
-            times.push({ ms: loaded[i], penalty: 'none' });
+            times.push({ ms: loaded[i], penalty: 'none', scramble: '' });
         } else {
             times.push(loaded[i]);
         }

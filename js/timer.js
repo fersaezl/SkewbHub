@@ -38,7 +38,13 @@ function stopTimer() {
     clearInterval(timerInterval);
     isRunning = false;
     $('#timer-status').text(msgStart);
-    addTime(elapsedTime);
+
+    // The scramble on screen is the one that was just solved (the new one is created below)
+    let currentScramble = '';
+    if (window.getCurrentScramble) {
+        currentScramble = window.getCurrentScramble();
+    }
+    addTime(elapsedTime, currentScramble);
 
     updateSummary();
     renderTable();
@@ -129,6 +135,13 @@ function fillSolveModal() {
     const solve = times[selectedIndex];
     $('#solve-modal-title').text('Solve ' + (selectedIndex + 1));
     $('#solve-modal-time').text(formatSolve(solve));
+
+    if (solve.scramble) {
+        $('#solve-modal-scramble').text(solve.scramble);
+    } else {
+        $('#solve-modal-scramble').text('Scramble not saved');
+    }
+
     $('.btn-penalty').removeClass('active');
     $('.btn-penalty[data-penalty="' + solve.penalty + '"]').addClass('active');
 }
