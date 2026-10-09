@@ -83,8 +83,33 @@
     </section>
 
     <footer class="text-center text-muted py-3">
-        <small>SkewbHub v0.4.0</small>
+        <small>SkewbHub v0.5.0</small>
     </footer>
+
+    <!-- Options for one solve (opens when a row of the table is clicked) -->
+    <div class="modal fade" id="solve-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="solve-modal-title">Solve</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="fs-2 mb-3" id="solve-modal-time"></p>
+                    <p class="small text-muted text-break mb-3" id="solve-modal-scramble"></p>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-outline-success btn-penalty" data-penalty="none">OK</button>
+                        <button class="btn btn-outline-warning btn-penalty" data-penalty="plus2">+2</button>
+                        <button class="btn btn-outline-danger btn-penalty" data-penalty="dnf">DNF</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-danger me-auto" id="btn-delete-solve">Delete</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery & Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>

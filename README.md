@@ -3,7 +3,8 @@
 
 A web-based Skewb timer and algorithm trainer to practice cases and track your times.
 
-![SkewbHub screenshot](docs/screenshot.png)
+![SkewbHub timer](docs/screenshot.png)
+![Solve dialog with +2, DNF and saved scramble](docs/screenshot-dialog.png)
 
 ## Features
 - Timer with spacebar control (hold to start on touch screens)
@@ -12,6 +13,8 @@ A web-based Skewb timer and algorithm trainer to practice cases and track your t
 - Session statistics (ao5, ao12, pb) saved in your browser
 - Delete individual times or clear the session
 - Scramble history with previous and next buttons
+- +2 and DNF penalties
+- Scramble saved with each solve
 
 ## Tech Stack
 HTML · CSS · Bootstrap · JavaScript · jQuery
@@ -21,7 +24,6 @@ HTML · CSS · Bootstrap · JavaScript · jQuery
 
 ## Roadmap
 - Case training mode
-- +2 and DNF penalties
 - Export/import times (JSON/CSV)
 
 ## Credits

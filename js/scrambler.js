@@ -61,7 +61,7 @@ function showScramble(text) {
     $('#btn-prev-scramble').prop('disabled', scrambleIndex <= 0);
 }
 
-// Generates a new scramble and adds it at the end of the history
+// Generates a new scramble and adds it right after the one on screen
 async function newScramble() {
     const text = await getScramble();
     scrambleHistory.length = scrambleIndex + 1;
@@ -92,6 +92,11 @@ $('#btn-next-scramble').on('click', nextScramble);
 
 // A module has its own scope, so timer.js can only reach this function through window
 window.newScramble = newScramble;
+
+// timer.js saves this scramble together with each solve
+window.getCurrentScramble = function () {
+    return scrambleHistory[scrambleIndex] || '';
+};
 
 // The first scramble waits for the load attempt, so the official one is used when possible
 loadOfficialScrambler().then(newScramble);

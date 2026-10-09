@@ -38,7 +38,13 @@ function stopTimer() {
     clearInterval(timerInterval);
     isRunning = false;
     $('#timer-status').text(msgStart);
-    addTime(elapsedTime);
+
+    // The scramble on screen is the one that was just solved (the new one is created below)
+    let currentScramble = '';
+    if (window.getCurrentScramble) {
+        currentScramble = window.getCurrentScramble();
+    }
+    addTime(elapsedTime, currentScramble);
 
     updateSummary();
     renderTable();
@@ -59,6 +65,10 @@ function resetTimer() {
 
 // Keyboard: press space = ready, release = start, press again = stop
 $(document).on('keydown', function (e) {
+    if (isModalOpen()) {
+        return;
+    }
+
     if (e.code === 'Space') {
         e.preventDefault(); // avoid scrolling the page
         if (isRunning) {
@@ -112,13 +122,50 @@ $('#btn-clear').on('click', function () {
     updateSummary();
 });
 
-// Delegated event, because renderTable() recreates the rows every time. data-index is the position of the time in the times array.
-$(document).on('click', '.clickable-row', function () {
-    const index = $(this).data('index');
-    if (confirm('Delete this time?')) {
-        times.splice(index, 1);
-        localStorage.setItem('times', JSON.stringify(times)); // otherwise the time comes back after reloading
-        renderTable();
-        updateSummary();
+// Options of a solve (click on a row of the table)
+const solveModal = new bootstrap.Modal(document.getElementById('solve-modal'));
+let selectedIndex = null; // position of the solve shown in the dialog
+
+function isModalOpen() {
+    return $('#solve-modal').hasClass('show');
+}
+
+// Fills the dialog with the data of the selected solve
+function fillSolveModal() {
+    const solve = times[selectedIndex];
+    $('#solve-modal-title').text('Solve ' + (selectedIndex + 1));
+    $('#solve-modal-time').text(formatSolve(solve));
+
+    if (solve.scramble) {
+        $('#solve-modal-scramble').text(solve.scramble);
+    } else {
+        $('#solve-modal-scramble').text('Scramble not saved');
     }
+
+    $('.btn-penalty').removeClass('active');
+    $('.btn-penalty[data-penalty="' + solve.penalty + '"]').addClass('active');
+}
+
+// Delegated event, because renderTable() recreates the rows every time, data-index is the position of the time in the times array
+$(document).on('click', '.clickable-row', function () {
+    if (isRunning) {
+        return; // do not open the dialog while the timer is running
+    }
+    selectedIndex = $(this).data('index');
+    fillSolveModal();
+    solveModal.show();
+});
+
+$('.btn-penalty').on('click', function () {
+    setPenalty(selectedIndex, $(this).data('penalty'));
+    renderTable();
+    updateSummary();
+    solveModal.hide();
+});
+
+$('#btn-delete-solve').on('click', function () {
+    deleteTime(selectedIndex);
+    renderTable();
+    updateSummary();
+    solveModal.hide();
 });
