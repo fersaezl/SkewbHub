@@ -11,6 +11,7 @@ A web-based Skewb timer and algorithm trainer to practice cases and track your t
 - Flat image of the scrambled cube, drawn with SVG
 - Session statistics (ao5, ao12, pb) saved in your browser
 - Delete individual times or clear the session
+- Scramble history with previous and next buttons
 
 ## Tech Stack
 HTML · CSS · Bootstrap · JavaScript · jQuery
@@ -19,9 +20,9 @@ HTML · CSS · Bootstrap · JavaScript · jQuery
 [fersaezl.github.io/SkewbHub](https://fersaezl.github.io/SkewbHub/)
 
 ## Roadmap
-- Previous / next scramble buttons
 - Case training mode
 - +2 and DNF penalties
+- Export/import times (JSON/CSV)
 
 ## Credits
 - Scrambles by [cubing.js](https://js.cubing.net/cubing/)

@@ -49,15 +49,46 @@ async function getScramble() {
     return generateBackupScramble();
 }
 
+// Every scramble shown so far, so the user can go back to the previous ones.
+// scrambleIndex is the position of the scramble currently on screen.
+const scrambleHistory = [];
+let scrambleIndex = -1;
+
 function showScramble(text) {
     $('#scramble').text(text);
     drawScramble(text);
+    // There is nothing before the first scramble, so "previous" is disabled there
+    $('#btn-prev-scramble').prop('disabled', scrambleIndex <= 0);
 }
 
+// Generates a new scramble and adds it at the end of the history
 async function newScramble() {
     const text = await getScramble();
+    scrambleHistory.length = scrambleIndex + 1;
+    scrambleHistory.push(text);
+    scrambleIndex = scrambleHistory.length - 1;
     showScramble(text);
 }
+
+function previousScramble() {
+    if (scrambleIndex > 0) {
+        scrambleIndex--;
+        showScramble(scrambleHistory[scrambleIndex]);
+    }
+}
+
+// If we went back, "next" shows the saved scramble; at the end it makes a new one
+async function nextScramble() {
+    if (scrambleIndex < scrambleHistory.length - 1) {
+        scrambleIndex++;
+        showScramble(scrambleHistory[scrambleIndex]);
+    } else {
+        await newScramble();
+    }
+}
+
+$('#btn-prev-scramble').on('click', previousScramble);
+$('#btn-next-scramble').on('click', nextScramble);
 
 // A module has its own scope, so timer.js can only reach this function through window
 window.newScramble = newScramble;

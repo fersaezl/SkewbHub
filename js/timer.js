@@ -39,20 +39,8 @@ function stopTimer() {
     isRunning = false;
     $('#timer-status').text(msgStart);
     addTime(elapsedTime);
-    if (ao5() !== null) {
-        $('#ao5').text((ao5() / 1000).toFixed(2));
-    } else {
-        $('#ao5').text('-');
-    }
 
-    if (ao12() !== null) {
-        $('#ao12').text((ao12() / 1000).toFixed(2));
-    } else {
-        $('#ao12').text('-');
-    }
-
-    $('#pb').text((pb() / 1000).toFixed(2));
-
+    updateSummary();
     renderTable();
 
     // newScramble lives in scrambler.js (a module), so it may not exist yet
@@ -121,9 +109,7 @@ $('#btn-clear').on('click', function () {
     clearTimes();
     resetTimer();
     $('#times-body').empty();
-    $('#ao5').text('-');
-    $('#ao12').text('-');
-    $('#pb').text('-');
+    updateSummary();
 });
 
 // Delegated event, because renderTable() recreates the rows every time. data-index is the position of the time in the times array.
@@ -133,23 +119,6 @@ $(document).on('click', '.clickable-row', function () {
         times.splice(index, 1);
         localStorage.setItem('times', JSON.stringify(times)); // otherwise the time comes back after reloading
         renderTable();
-
-        if (ao5() !== null) {
-            $('#ao5').text((ao5() / 1000).toFixed(2));
-        } else {
-            $('#ao5').text('-');
-        }
-
-        if (ao12() !== null) {
-            $('#ao12').text((ao12() / 1000).toFixed(2));
-        } else {
-            $('#ao12').text('-');
-        }
-
-        if (times.length > 0) {
-            $('#pb').text((pb() / 1000).toFixed(2));
-        } else {
-            $('#pb').text('-');
-        }
+        updateSummary();
     }
 });
