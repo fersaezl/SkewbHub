@@ -1,8 +1,14 @@
 #timer {
     font-size: 5rem;
-    font-weight: bold;
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
 }
 
 #timer.ready {
-    color: green;
+    color: var(--sh-success);
+}
+
+#timer-status {
+    color: var(--sh-muted);
 }

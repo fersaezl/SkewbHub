@@ -1,11 +1,136 @@
+:root {
+    --sh-bg: #0a1220;
+    --sh-surface: #101a2c;
+    --sh-surface-2: #16223a;
+    --sh-border: #1d2a42;
+    --sh-border-strong: #2b3b5a;
+    --sh-text: #e8edf7;
+    --sh-muted: #8d99b3;
+    --sh-accent: #25b5f2;
+    --sh-success: #2fd6a1;
+    --sh-warning: #ffb347;
+    --sh-danger: #ff6464;
+}
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: var(--sh-bg);
+    --bs-body-color: var(--sh-text);
+    --bs-emphasis-color: #ffffff;
+    --bs-secondary-color: var(--sh-muted);
+    --bs-secondary-bg: var(--sh-surface);
+    --bs-tertiary-bg: var(--sh-surface-2);
+    --bs-border-color: var(--sh-border);
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sh-navbar {
+    padding: 0;
+    background: var(--sh-surface);
+    border-bottom: 1px solid var(--sh-border);
+}
+
+.sh-navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--sh-text);
+}
+
+.sh-navbar .nav-link {
+    position: relative;
+    padding: 1.15rem 1rem;
+    font-weight: 500;
+    color: var(--sh-muted);
+}
+
+.sh-navbar .nav-link:hover,
+.sh-navbar .nav-link.active {
+    color: var(--sh-text);
+}
+
+.sh-navbar .nav-link.active::after {
+    content: '';
+    position: absolute;
+    left: 0.6rem;
+    right: 0.6rem;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: var(--sh-accent);
+}
+
+@media (max-width: 575.98px) {
+    .sh-navbar .navbar-brand {
+        margin-right: 0;
+        font-size: 1.1rem;
+    }
+
+    .sh-navbar .nav-link {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 399.98px) {
+    .sh-navbar .brand-text {
+        display: none;
+    }
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--sh-text);
+    --bs-btn-border-color: var(--sh-border-strong);
+    --bs-btn-hover-color: var(--sh-text);
+    --bs-btn-hover-bg: var(--sh-surface-2);
+    --bs-btn-hover-border-color: var(--sh-accent);
+    --bs-btn-active-color: var(--sh-text);
+    --bs-btn-active-bg: var(--sh-surface-2);
+    --bs-btn-active-border-color: var(--sh-accent);
+    --bs-btn-disabled-color: var(--sh-muted);
+    --bs-btn-disabled-border-color: var(--sh-border);
+}
+
+.table {
+    font-variant-numeric: tabular-nums;
+}
+
 .table .highlight-ao {
-    color: #198754;
-    font-weight: bold;
+    color: var(--sh-success);
+    font-weight: 700;
 }
 
 .table .highlight-pb {
-    color: #ffc107;
-    font-weight: bold;
+    color: var(--sh-accent);
+    font-weight: 700;
+}
+
+.table .clickable-row {
+    cursor: pointer;
+}
+
+.table .clickable-row:hover>* {
+    --bs-table-bg-state: var(--sh-surface-2);
+}
+
+.modal-content {
+    background: var(--sh-surface);
+    border: 1px solid var(--sh-border);
+    border-radius: 14px;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--sh-border);
+}
+
+footer {
+    border-top: 1px solid var(--sh-border);
 }
 
 #skewbs svg {
