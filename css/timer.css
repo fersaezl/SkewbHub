@@ -1,5 +1,5 @@
 #timer {
-    font-size: 5rem;
+    font-size: clamp(4rem, 14vw, 7rem);
     font-weight: 700;
     line-height: 1.1;
     font-variant-numeric: tabular-nums;
