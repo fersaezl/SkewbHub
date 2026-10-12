@@ -146,8 +146,10 @@ function renderTable() {
     // Newest solve first, so each row is prepended
     for (let i = 0; i < times.length; i++) {
         let timeClass = '';
+        let star = '';
         if (effectiveTime(times[i]) === pbVal) {
             timeClass = 'highlight-pb';
+            star = ' ★';
         }
 
         let ao5Class = '';
@@ -163,7 +165,7 @@ function renderTable() {
         $('#times-body').prepend(
             '<tr class="clickable-row" data-index="' + i + '">' +
             '<td>' + (i + 1) + '</td>' +
-            '<td class="' + timeClass + '">' + formatSolve(times[i]) + '</td>' +
+            '<td class="' + timeClass + '">' + formatSolve(times[i]) + star + '</td>' +
             '<td class="' + ao5Class + '">' + formatTime(ao5List[i]) + '</td>' +
             '<td class="' + ao12Class + '">' + formatTime(ao12List[i]) + '</td>' +
             '</tr>'
