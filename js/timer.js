@@ -169,3 +169,18 @@ $('#btn-delete-solve').on('click', function () {
     updateSummary();
     solveModal.hide();
 });
+
+// Quick buttons under the timer (mobile): +2 / DNF on the last solve, pressing the same one again removes the penalty
+$('.btn-quick').on('click', function () {
+    if (isRunning || isReady || times.length === 0) {
+        return;
+    }
+    const index = times.length - 1;
+    const chosen = $(this).data('penalty');
+    const newPenalty = times[index].penalty === chosen ? 'none' : chosen;
+
+    setPenalty(index, newPenalty);
+    $('#timer').text(formatSolve(times[index]));
+    renderTable();
+    updateSummary();
+});

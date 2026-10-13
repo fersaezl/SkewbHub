@@ -136,6 +136,15 @@ function bestShown(values) {
     return best;
 }
 
+// Quick penalty buttons (mobile): disabled without solves, the active one is the penalty of the last solve
+function updateQuickButtons() {
+    $('.btn-quick').prop('disabled', times.length === 0).removeClass('active');
+    if (times.length > 0) {
+        const last = times[times.length - 1];
+        $('.btn-quick[data-penalty="' + last.penalty + '"]').addClass('active');
+    }
+}
+
 // Shows ao5, ao12 and pb in the summary under the timer
 function updateSummary() {
     const last = times[times.length - 1];
@@ -153,6 +162,8 @@ function updateSummary() {
     $('#m-time').text(currentTime);
     $('#m-ao5').text(formatTime(ao5()));
     $('#m-ao12').text(formatTime(ao12()));
+
+    updateQuickButtons();
 }
 
 function renderTable() {

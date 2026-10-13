@@ -290,6 +290,13 @@ footer {
     background: var(--sh-accent);
 }
 
+.sh-quick {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0 0.75rem;
+}
+
 @media (min-width: 768px) {
     body {
         height: 100dvh;
@@ -423,6 +430,8 @@ footer {
     .sh-timer-body .sh-timer-col {
         flex: 1;
         display: flex;
+        flex-direction: column;
+        position: relative;
     }
 
     #timer-section {
@@ -476,6 +485,14 @@ footer {
     .sh-mini-stats b {
         font-weight: 600;
         font-variant-numeric: tabular-nums;
+    }
+
+    .sh-quick {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(50% + 4rem);
+        padding: 0;
     }
 }
 
