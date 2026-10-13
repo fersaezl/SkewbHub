@@ -392,6 +392,58 @@ footer {
     .sh-main[data-view="times"] .sh-left {
         display: none;
     }
+
+    .sh-main[data-view="timer"] {
+        min-height: calc(100dvh - 8.9rem);
+    }
+
+    .sh-timer-card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sh-card-footer {
+        display: none;
+    }
+
+    .sh-timer-body {
+        flex: 1;
+        display: flex;
+    }
+
+    .sh-timer-body .row {
+        flex: 1;
+        flex-direction: column-reverse;
+        flex-wrap: nowrap;
+        --bs-gutter-x: 0;
+        --bs-gutter-y: 0;
+    }
+
+    .sh-timer-body .sh-timer-col {
+        flex: 1;
+        display: flex;
+    }
+
+    #timer-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sh-timer-body .sh-cube-col {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .sh-cube-col #skewbs {
+        max-width: 7rem;
+        margin: 0 !important;
+    }
 }
 
 #skewbs {
