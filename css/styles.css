@@ -357,21 +357,24 @@ footer {
 
 @media (max-width: 767.98px) {
     .sh-scramble-bar {
-        grid-template-columns: 1fr;
-        justify-items: center;
-    }
-
-    .sh-scramble-spacer {
-        display: none;
-    }
-
-    .sh-scramble-actions {
-        justify-content: center;
+        grid-template-columns: auto 1fr auto;
+        gap: 0.5rem;
+        padding: 0.6rem 0.75rem;
     }
 
     .sh-scramble-bar #scramble {
-        font-size: 1.05rem;
-        letter-spacing: 0.08em;
+        font-size: 0.85rem;
+        letter-spacing: 0.03em;
+        text-wrap: balance;
+    }
+
+    .sh-scramble-bar .btn {
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0;
+        border-radius: 50%;
+        font-size: 1.25rem;
+        line-height: 1;
     }
 
     body {
