@@ -82,6 +82,21 @@ function ao12() {
     return averageAt(12, times.length - 1);
 }
 
+// Best average of size n over the whole history (null if there is none yet), DNF averages never count as the best
+function bestAverage(n) {
+    let best = null;
+    for (let i = 0; i < times.length; i++) {
+        const avg = averageAt(n, i);
+        if (avg === null || avg === Infinity) {
+            continue;
+        }
+        if (best === null || avg < best) {
+            best = avg;
+        }
+    }
+    return best;
+}
+
 function clearTimes() {
     times.length = 0;
     localStorage.removeItem('times');
@@ -123,9 +138,16 @@ function bestShown(values) {
 
 // Shows ao5, ao12 and pb in the summary under the timer
 function updateSummary() {
-    $('#ao5').text(formatTime(ao5()));
-    $('#ao12').text(formatTime(ao12()));
-    $('#pb').text(formatTime(pb()));
+    const last = times[times.length - 1];
+
+    $('#cur-time').text(last ? formatSolve(last) : '-');
+    $('#best-time').text(formatTime(pb()));
+
+    $('#cur-ao5').text(formatTime(ao5()));
+    $('#best-ao5').text(formatTime(bestAverage(5)));
+
+    $('#cur-ao12').text(formatTime(ao12()));
+    $('#best-ao12').text(formatTime(bestAverage(12)));
 }
 
 function renderTable() {

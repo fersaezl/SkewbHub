@@ -223,6 +223,37 @@ footer {
     display: contents;
 }
 
+.sh-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 0;
+}
+
+.sh-summary .table> :not(caption)>*>* {
+    padding: 0.45rem 0.75rem;
+}
+
+.sh-summary tbody th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--sh-muted);
+}
+
+.sh-summary td:last-child {
+    color: var(--sh-accent);
+    font-weight: 600;
+}
+
+.sh-summary tbody tr:last-child>* {
+    border-bottom-width: 0;
+}
+
+.sh-table-card .table> :not(caption)>*>* {
+    padding: 0.7rem 0.4rem;
+    white-space: nowrap;
+}
+
 @media (min-width: 768px) {
     body {
         height: 100dvh;
@@ -268,7 +299,12 @@ footer {
         justify-content: center;
     }
 
+    .sh-summary {
+        flex-shrink: 0;
+    }
+
     .sh-table-card {
+        flex: 1;
         min-height: 0;
         overflow-y: auto;
     }

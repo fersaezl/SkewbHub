@@ -74,21 +74,6 @@
                                 <div id="timer">0.00</div>
                                 <p id="timer-status">Press space to start</p>
                             </div>
-
-                            <div class="sh-stats">
-                                <div class="sh-stat">
-                                    <span class="sh-stat-label">ao5</span>
-                                    <span class="sh-stat-value" id="ao5">-</span>
-                                </div>
-                                <div class="sh-stat">
-                                    <span class="sh-stat-label">ao12</span>
-                                    <span class="sh-stat-value" id="ao12">-</span>
-                                </div>
-                                <div class="sh-stat">
-                                    <span class="sh-stat-label">PB</span>
-                                    <span class="sh-stat-value" id="pb">-</span>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -101,20 +86,52 @@
         </div>
 
         <!-- Table of times -->
-        <section class="sh-card sh-table-card">
-            <table class="table align-middle text-center mb-0" id="times-list">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Time</th>
-                        <th>ao5</th>
-                        <th>ao12</th>
-                    </tr>
-                </thead>
-                <tbody id="times-body">
-                </tbody>
-            </table>
-        </section>
+        <aside class="sh-right">
+            <section class="sh-card sh-summary">
+                <table class="table align-middle text-center mb-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>current</th>
+                            <th>best</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">time</th>
+                            <td id="cur-time">-</td>
+                            <td id="best-time">-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ao5</th>
+                            <td id="cur-ao5">-</td>
+                            <td id="best-ao5">-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ao12</th>
+                            <td id="cur-ao12">-</td>
+                            <td id="best-ao12">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="sh-card sh-table-card">
+                <table class="table align-middle text-center mb-0" id="times-list">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Time</th>
+                            <th>ao5</th>
+                            <th>ao12</th>
+                        </tr>
+                    </thead>
+                    <tbody id="times-body">
+                    </tbody>
+                </table>
+            </section>
+        </aside>
+
 
     </main>
 
