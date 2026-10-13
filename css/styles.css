@@ -254,6 +254,42 @@ footer {
     white-space: nowrap;
 }
 
+.sh-tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1030;
+    display: flex;
+    background: var(--sh-surface);
+    border-top: 1px solid var(--sh-border);
+}
+
+.sh-tab {
+    position: relative;
+    flex: 1;
+    padding: 0.95rem 0;
+    border: 0;
+    background: none;
+    color: var(--sh-muted);
+    font-weight: 500;
+}
+
+.sh-tab.active {
+    color: var(--sh-accent);
+}
+
+.sh-tab.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 30%;
+    right: 30%;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: var(--sh-accent);
+}
+
 @media (min-width: 768px) {
     body {
         height: 100dvh;
@@ -336,6 +372,22 @@ footer {
     .sh-scramble-bar #scramble {
         font-size: 1.05rem;
         letter-spacing: 0.08em;
+    }
+
+    body {
+        padding-bottom: 4rem;
+    }
+
+    footer {
+        display: none;
+    }
+
+    .sh-main[data-view="timer"] .sh-right {
+        display: none;
+    }
+
+    .sh-main[data-view="times"] .sh-left {
+        display: none;
     }
 }
 
