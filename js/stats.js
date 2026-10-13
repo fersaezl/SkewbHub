@@ -82,6 +82,21 @@ function ao12() {
     return averageAt(12, times.length - 1);
 }
 
+// Best average of size n over the whole history (null if there is none yet), DNF averages never count as the best
+function bestAverage(n) {
+    let best = null;
+    for (let i = 0; i < times.length; i++) {
+        const avg = averageAt(n, i);
+        if (avg === null || avg === Infinity) {
+            continue;
+        }
+        if (best === null || avg < best) {
+            best = avg;
+        }
+    }
+    return best;
+}
+
 function clearTimes() {
     times.length = 0;
     localStorage.removeItem('times');
@@ -121,11 +136,34 @@ function bestShown(values) {
     return best;
 }
 
+// Quick penalty buttons (mobile): disabled without solves, the active one is the penalty of the last solve
+function updateQuickButtons() {
+    $('.btn-quick').prop('disabled', times.length === 0).removeClass('active');
+    if (times.length > 0) {
+        const last = times[times.length - 1];
+        $('.btn-quick[data-penalty="' + last.penalty + '"]').addClass('active');
+    }
+}
+
 // Shows ao5, ao12 and pb in the summary under the timer
 function updateSummary() {
-    $('#ao5').text(formatTime(ao5()));
-    $('#ao12').text(formatTime(ao12()));
-    $('#pb').text(formatTime(pb()));
+    const last = times[times.length - 1];
+    const currentTime = last ? formatSolve(last) : '-';
+
+    $('#cur-time').text(currentTime);
+    $('#best-time').text(formatTime(pb()));
+
+    $('#cur-ao5').text(formatTime(ao5()));
+    $('#best-ao5').text(formatTime(bestAverage(5)));
+
+    $('#cur-ao12').text(formatTime(ao12()));
+    $('#best-ao12').text(formatTime(bestAverage(12)));
+
+    $('#m-time').text(currentTime);
+    $('#m-ao5').text(formatTime(ao5()));
+    $('#m-ao12').text(formatTime(ao12()));
+
+    updateQuickButtons();
 }
 
 function renderTable() {
@@ -146,8 +184,10 @@ function renderTable() {
     // Newest solve first, so each row is prepended
     for (let i = 0; i < times.length; i++) {
         let timeClass = '';
+        let star = '';
         if (effectiveTime(times[i]) === pbVal) {
             timeClass = 'highlight-pb';
+            star = ' ★';
         }
 
         let ao5Class = '';
@@ -163,7 +203,7 @@ function renderTable() {
         $('#times-body').prepend(
             '<tr class="clickable-row" data-index="' + i + '">' +
             '<td>' + (i + 1) + '</td>' +
-            '<td class="' + timeClass + '">' + formatSolve(times[i]) + '</td>' +
+            '<td class="' + timeClass + '">' + formatSolve(times[i]) + star + '</td>' +
             '<td class="' + ao5Class + '">' + formatTime(ao5List[i]) + '</td>' +
             '<td class="' + ao12Class + '">' + formatTime(ao12List[i]) + '</td>' +
             '</tr>'

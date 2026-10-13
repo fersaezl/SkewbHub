@@ -1,11 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SkewbHub</title>
     <link rel="icon" type="image/png" href="img/logo.png">
+
+    <meta name="theme-color" content="#0a1220" />
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
@@ -18,11 +25,14 @@
 
 <body>
     <!-- Navigation bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand sh-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="SkewbHub Logo" width="32" height="32"
-                    class="d-inline-block align-text-top me-2"> SkewbHub</a>
+            <a class="navbar-brand" href="index.html">
+                <img src="img/logo.png" alt="" width="32" height="32" class="me-2">
+                <span class="brand-text">SkewbHub</span>
+            </a>
             <div class="navbar-nav ms-auto">
+                <a class="nav-link active" aria-current="page" href="index.html">Timer</a>
                 <a class="nav-link" href="selection.html">Selection</a>
                 <a class="nav-link" href="statistics.html">Statistics</a>
             </div>
@@ -30,60 +40,124 @@
     </nav>
 
     <!-- Main content -->
-    <main class="container my-4">
-        <div class="row">
+    <main class="container sh-main" data-view="timer">
 
-            <!-- Case image -->
-            <div class="col-12 col-md-4 text-center">
-                <div id="case-image"></div>
-                <p id="case-name" class="mt-2"></p>
+        <div class="sh-left">
 
-                <div id="skewbs" class="mx-auto" style="max-width: 340px;"></div>
-            </div>
-
-            <!-- Scramble -->
-            <div class="col-12 col-md-8">
-                <p id="scramble" class="text-center"></p>
-                <div class="text-center mb-3">
-                    <button id="btn-prev-scramble" class="btn btn-outline-secondary btn-sm" disabled>Last
-                        Scramble</button>
-                    <button id="btn-next-scramble" class="btn btn-outline-secondary btn-sm">Next Scramble</button>
+            <!-- Scramble bar: previous on the left, scramble in the middle, next on the right -->
+            <section class="sh-card sh-scramble-bar">
+                <div class="sh-scramble-prev">
+                    <button id="btn-prev-scramble" class="btn btn-outline-secondary btn-sm" aria-label="Last scramble"
+                        disabled>
+                        <span aria-hidden="true">‹</span><span class="d-none d-lg-inline"> Last Scramble</span>
+                    </button>
                 </div>
-            </div>
+                <p id="scramble"></p>
+                <div class="sh-scramble-actions">
+                    <button id="btn-next-scramble" class="btn btn-outline-secondary btn-sm" aria-label="Next scramble">
+                        <span class="d-none d-lg-inline">Next Scramble </span><span aria-hidden="true">›</span>
+                    </button>
+                </div>
+            </section>
 
+            <!-- Timer card: stats on the right, timer and cube on the left -->
+            <section class="sh-card sh-timer-card">
+                <div class="p-2 p-md-4 sh-timer-body">
+                    <div class="row align-items-center g-4">
+
+                        <!-- Cube -->
+                        <div class="col-12 col-lg-5 text-center sh-cube-col">
+                            <div id="case-image"></div>
+                            <p id="case-name" class="mb-0"></p>
+                            <div id="skewbs" class="mx-auto"></div>
+                            <div class="sh-mini-stats d-md-none">
+                                <div><span>time</span><b id="m-time">-</b></div>
+                                <div><span>ao5</span><b id="m-ao5">-</b></div>
+                                <div><span>ao12</span><b id="m-ao12">-</b></div>
+                            </div>
+                        </div>
+
+                        <!-- Timer and stats -->
+                        <div class="col-12 col-lg-7 text-center sh-timer-col">
+                            <!-- Only this part reacts to touch (see timer.js) -->
+                            <div id="timer-section">
+                                <div id="timer">0.00</div>
+                                <p id="timer-status">Press space to start</p>
+                            </div>
+                            <div class="sh-quick d-md-none">
+                                <button class="btn btn-outline-secondary btn-quick rounded-pill px-4"
+                                    data-penalty="plus2" disabled>+2</button>
+                                <button class="btn btn-outline-secondary btn-quick rounded-pill px-4" data-penalty="dnf"
+                                    disabled>DNF</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="sh-card-footer">
+                    <button class="btn btn-outline-warning btn-sm btn-clear">Clear</button>
+                </div>
+            </section>
         </div>
+
+        <!-- Summary (current / best) and list of times -->
+        <aside class="sh-right">
+            <section class="sh-card sh-summary">
+                <table class="table align-middle text-center mb-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>current</th>
+                            <th>best</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">time</th>
+                            <td id="cur-time">-</td>
+                            <td id="best-time">-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ao5</th>
+                            <td id="cur-ao5">-</td>
+                            <td id="best-ao5">-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ao12</th>
+                            <td id="cur-ao12">-</td>
+                            <td id="best-ao12">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <button class="btn btn-outline-warning btn-sm btn-clear d-md-none">Clear all times</button>
+
+            <section class="sh-card sh-table-card">
+                <table class="table align-middle text-center mb-0" id="times-list">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Time</th>
+                            <th>ao5</th>
+                            <th>ao12</th>
+                        </tr>
+                    </thead>
+                    <tbody id="times-body">
+                    </tbody>
+                </table>
+            </section>
+        </aside>
     </main>
 
-    <!-- Timer -->
-    <section id="timer-section" class="container text-center my-4">
-        <div id="timer">0.00</div>
-        <p id="timer-status">Press space to start</p>
-        <div class="mt-3">
-            <span>ao5: <span id="ao5">-</span></span>
-            <span class="ms-3">ao12: <span id="ao12">-</span></span>
-            <span class="ms-3">pb: <span id="pb">-</span></span>
-        </div>
-    </section>
-    <div class="container text-center">
-        <button id="btn-clear" class="btn btn-danger btn-sm">Clear</button>
-    </div>
-    <section class="container my-4">
-        <table class="table table-sm text-center" id="times-list">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Time</th>
-                    <th>ao5</th>
-                    <th>ao12</th>
-                </tr>
-            </thead>
-            <tbody id="times-body">
-            </tbody>
-        </table>
-    </section>
+    <nav class="sh-tabbar d-md-none">
+        <button class="sh-tab active" data-view="timer">Timer</button>
+        <button class="sh-tab" data-view="times">Times</button>
+    </nav>
 
     <footer class="text-center text-muted py-3">
-        <small>SkewbHub v0.5.0</small>
+        <small>SkewbHub v0.6.0</small>
     </footer>
 
     <!-- Options for one solve (opens when a row of the table is clicked) -->
@@ -106,6 +180,25 @@
                 <div class="modal-footer">
                     <button class="btn btn-outline-danger me-auto" id="btn-delete-solve">Delete</button>
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation before deleting all the times -->
+    <div class="modal fade" id="clear-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete all times?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0 text-muted">This cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" id="btn-confirm-clear">Delete all</button>
                 </div>
             </div>
         </div>
