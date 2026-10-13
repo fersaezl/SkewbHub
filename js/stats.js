@@ -139,8 +139,9 @@ function bestShown(values) {
 // Shows ao5, ao12 and pb in the summary under the timer
 function updateSummary() {
     const last = times[times.length - 1];
+    const currentTime = last ? formatSolve(last) : '-';
 
-    $('#cur-time').text(last ? formatSolve(last) : '-');
+    $('#cur-time').text(currentTime);
     $('#best-time').text(formatTime(pb()));
 
     $('#cur-ao5').text(formatTime(ao5()));
@@ -148,6 +149,10 @@ function updateSummary() {
 
     $('#cur-ao12').text(formatTime(ao12()));
     $('#best-ao12').text(formatTime(bestAverage(12)));
+
+    $('#m-time').text(currentTime);
+    $('#m-ao5').text(formatTime(ao5()));
+    $('#m-ao12').text(formatTime(ao12()));
 }
 
 function renderTable() {

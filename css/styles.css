@@ -435,14 +435,47 @@ footer {
 
     .sh-timer-body .sh-cube-col {
         flex: 0 0 auto;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         align-items: center;
-        justify-content: flex-start;
+        gap: 1rem;
+        padding: 0.5rem 0.75rem 0.25rem;
+    }
+
+    .sh-cube-col #case-image:empty,
+    .sh-cube-col #case-name:empty {
+        display: none;
     }
 
     .sh-cube-col #skewbs {
-        max-width: 7rem;
-        margin: 0 !important;
+        width: 100%;
+        max-width: 10rem;
+        margin: 0 auto !important;
+    }
+
+    .sh-mini-stats {
+        flex: 1;
+        text-align: left;
+    }
+
+    .sh-mini-stats div {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid var(--sh-border);
+    }
+
+    .sh-mini-stats div:last-child {
+        border-bottom: 0;
+    }
+
+    .sh-mini-stats span {
+        color: var(--sh-muted);
+    }
+
+    .sh-mini-stats b {
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
     }
 }
 
