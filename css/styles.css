@@ -307,6 +307,8 @@ footer {
         flex: 1;
         min-height: 0;
         overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--sh-border-strong) transparent;
     }
 
     .sh-table-card thead th {
