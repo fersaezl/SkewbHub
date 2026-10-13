@@ -115,11 +115,23 @@ $(document).on('touchend', function (e) {
 
 $('#timer-status').text(msgStart);
 
-$('#btn-clear').on('click', function () {
+// Clear all the times: the buttons only open the dialog, the deletion is done by the confirm button
+const clearModal = new bootstrap.Modal(document.getElementById('clear-modal'));
+
+$('.btn-clear').on('click', function () {
+    if (times.length === 0 || isRunning) {
+        return;
+    }
+    this.blur(); // so that a later space bar press does not click this button again
+    clearModal.show();
+});
+
+$('#btn-confirm-clear').on('click', function () {
     clearTimes();
     resetTimer();
     $('#times-body').empty();
     updateSummary();
+    clearModal.hide();
 });
 
 // Options of a solve (click on a row of the table)
@@ -127,7 +139,7 @@ const solveModal = new bootstrap.Modal(document.getElementById('solve-modal'));
 let selectedIndex = null; // position of the solve shown in the dialog
 
 function isModalOpen() {
-    return $('#solve-modal').hasClass('show');
+    return $('.modal.show').length > 0;
 }
 
 // Fills the dialog with the data of the selected solve
