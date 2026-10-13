@@ -211,6 +211,76 @@ footer {
     font-variant-numeric: tabular-nums;
 }
 
+.sh-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.sh-left {
+    display: contents;
+}
+
+@media (min-width: 768px) {
+    body {
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .navbar,
+    footer {
+        flex-shrink: 0;
+    }
+
+    .sh-main {
+        flex: 1;
+        min-height: 0;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 18rem;
+        gap: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .sh-left {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        min-height: 0;
+    }
+
+    .sh-timer-card {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sh-timer-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .sh-table-card {
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .sh-table-card thead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: var(--sh-surface);
+    }
+}
+
 @media (max-width: 767.98px) {
     .sh-scramble-bar {
         grid-template-columns: 1fr;

@@ -40,65 +40,68 @@
     </nav>
 
     <!-- Main content -->
-    <main class="container my-4 d-flex flex-column gap-3">
+    <main class="container sh-main">
 
-        <!-- Scramble bar: scramble in the middle, buttons on the right -->
-        <section class="sh-card sh-scramble-bar">
-            <span class="sh-scramble-spacer"></span>
-            <p id="scramble"></p>
-            <div class="sh-scramble-actions">
-                <button id="btn-prev-scramble" class="btn btn-outline-secondary btn-sm" disabled>Last
-                    Scramble</button>
-                <button id="btn-next-scramble" class="btn btn-outline-secondary btn-sm">Next Scramble</button>
-            </div>
-        </section>
+        <div class="sh-left">
 
-        <!-- Timer card: cube on the left, timer and stats on the right -->
-        <section class="sh-card">
-            <div class="p-3 p-md-4">
-                <div class="row align-items-center g-4">
-
-                    <!-- Cube -->
-                    <div class="col-12 col-md-5 text-center">
-                        <div id="case-image"></div>
-                        <p id="case-name" class="mb-0"></p>
-                        <div id="skewbs" class="mx-auto"></div>
-                    </div>
-
-                    <!-- Timer and stats -->
-                    <div class="col-12 col-md-7 text-center">
-                        <!-- Only this part reacts to touch (see timer.js) -->
-                        <div id="timer-section">
-                            <div id="timer">0.00</div>
-                            <p id="timer-status">Press space to start</p>
-                        </div>
-
-                        <div class="sh-stats">
-                            <div class="sh-stat">
-                                <span class="sh-stat-label">ao5</span>
-                                <span class="sh-stat-value" id="ao5">-</span>
-                            </div>
-                            <div class="sh-stat">
-                                <span class="sh-stat-label">ao12</span>
-                                <span class="sh-stat-value" id="ao12">-</span>
-                            </div>
-                            <div class="sh-stat">
-                                <span class="sh-stat-label">PB</span>
-                                <span class="sh-stat-value" id="pb">-</span>
-                            </div>
-                        </div>
-                    </div>
-
+            <!-- Scramble bar: scramble in the middle, buttons on the right -->
+            <section class="sh-card sh-scramble-bar">
+                <span class="sh-scramble-spacer"></span>
+                <p id="scramble"></p>
+                <div class="sh-scramble-actions">
+                    <button id="btn-prev-scramble" class="btn btn-outline-secondary btn-sm" disabled>Last
+                        Scramble</button>
+                    <button id="btn-next-scramble" class="btn btn-outline-secondary btn-sm">Next Scramble</button>
                 </div>
-            </div>
+            </section>
 
-            <div class="sh-card-footer">
-                <button id="btn-clear" class="btn btn-outline-warning btn-sm">Clear</button>
-            </div>
-        </section>
+            <!-- Timer card: cube on the left, timer and stats on the right -->
+            <section class="sh-card sh-timer-card">
+                <div class="p-3 p-md-4 sh-timer-body">
+                    <div class="row align-items-center g-4">
+
+                        <!-- Cube -->
+                        <div class="col-12 col-md-5 text-center">
+                            <div id="case-image"></div>
+                            <p id="case-name" class="mb-0"></p>
+                            <div id="skewbs" class="mx-auto"></div>
+                        </div>
+
+                        <!-- Timer and stats -->
+                        <div class="col-12 col-md-7 text-center">
+                            <!-- Only this part reacts to touch (see timer.js) -->
+                            <div id="timer-section">
+                                <div id="timer">0.00</div>
+                                <p id="timer-status">Press space to start</p>
+                            </div>
+
+                            <div class="sh-stats">
+                                <div class="sh-stat">
+                                    <span class="sh-stat-label">ao5</span>
+                                    <span class="sh-stat-value" id="ao5">-</span>
+                                </div>
+                                <div class="sh-stat">
+                                    <span class="sh-stat-label">ao12</span>
+                                    <span class="sh-stat-value" id="ao12">-</span>
+                                </div>
+                                <div class="sh-stat">
+                                    <span class="sh-stat-label">PB</span>
+                                    <span class="sh-stat-value" id="pb">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="sh-card-footer">
+                    <button id="btn-clear" class="btn btn-outline-warning btn-sm">Clear</button>
+                </div>
+            </section>
+        </div>
 
         <!-- Table of times -->
-        <section class="sh-card overflow-hidden">
+        <section class="sh-card sh-table-card">
             <table class="table align-middle text-center mb-0" id="times-list">
                 <thead>
                     <tr>
