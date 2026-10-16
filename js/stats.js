@@ -63,9 +63,11 @@ function averageAt(n, endIndex) {
         return 0;
     });
 
-    const trimmed = sorted.slice(1, n - 1);
+    // The best and the worst 5% (rounded up) are dropped: 1 solve on each side for ao5 and ao12, 3 for ao50 and 5 for ao100
+    const trim = Math.ceil(n * 0.05);
+    const trimmed = sorted.slice(trim, n - trim);
 
-    // One DNF is the worst time and gets dropped, as in the WCA rules. If a DNF is still left after dropping, there were two or more the average is DNF
+    // DNFs are the worst times, so they are dropped with the rest of the worst ones. If a DNF is still left after dropping, there were too many and the average is DNF
     if (trimmed.includes(Infinity)) {
         return Infinity;
     }
@@ -80,6 +82,23 @@ function ao5() {
 
 function ao12() {
     return averageAt(12, times.length - 1);
+}
+
+function ao50() {
+    return averageAt(50, times.length - 1);
+}
+
+function ao100() {
+    return averageAt(100, times.length - 1);
+}
+
+// Mean of all the solves. DNFs are left out because they have no time, and it is null if there is nothing to average
+function meanAll() {
+    const valid = times.map(effectiveTime).filter(isFinite);
+    if (valid.length === 0) {
+        return null;
+    }
+    return valid.reduce(function (sum, t) { return sum + t; }, 0) / valid.length;
 }
 
 // Best average of size n over the whole history (null if there is none yet), DNF averages never count as the best
@@ -145,13 +164,9 @@ function updateQuickButtons() {
     }
 }
 
-// Shows ao5, ao12 and pb in the summary under the timer
+// Shows the current and best values in the summary (desktop) and the mini stats next to the cube (mobile)
 function updateSummary() {
-    const last = times[times.length - 1];
-    const currentTime = last ? formatSolve(last) : '-';
-
-    $('#cur-time').text(currentTime);
-    $('#best-time').text(formatTime(pb()));
+    $('#s-best').text(formatTime(pb()));
 
     $('#cur-ao5').text(formatTime(ao5()));
     $('#best-ao5').text(formatTime(bestAverage(5)));
@@ -159,9 +174,24 @@ function updateSummary() {
     $('#cur-ao12').text(formatTime(ao12()));
     $('#best-ao12').text(formatTime(bestAverage(12)));
 
-    $('#m-time').text(currentTime);
+    $('#cur-ao50').text(formatTime(ao50()));
+    $('#best-ao50').text(formatTime(bestAverage(50)));
+
+    $('#cur-ao100').text(formatTime(ao100()));
+    $('#best-ao100').text(formatTime(bestAverage(100)));
+
+    $('#s-mean').text(formatTime(meanAll()));
+    $('#s-solves').text(times.length);
+
+    $('#m-best').text(formatTime(pb()));
     $('#m-ao5').text(formatTime(ao5()));
     $('#m-ao12').text(formatTime(ao12()));
+    $('#m-ao50').text(formatTime(ao50()));
+    $('#m-ao100').text(formatTime(ao100()));
+    $('#m-mean').text(formatTime(meanAll()));
+    $('#m-solves').text(times.length);
+
+    updateQuickButtons();
 
     updateQuickButtons();
 }

@@ -69,11 +69,17 @@
                         <div class="col-12 col-lg-5 text-center sh-cube-col">
                             <div id="case-image"></div>
                             <p id="case-name" class="mb-0"></p>
+                            <div class="sh-stats-left d-md-none">
+                                <div>best: <b id="m-best">-</b></div>
+                                <div>mean: <b id="m-mean">-</b></div>
+                                <div>solves: <b id="m-solves">0</b></div>
+                            </div>
                             <div id="skewbs" class="mx-auto"></div>
-                            <div class="sh-mini-stats d-md-none">
-                                <div><span>time</span><b id="m-time">-</b></div>
-                                <div><span>ao5</span><b id="m-ao5">-</b></div>
-                                <div><span>ao12</span><b id="m-ao12">-</b></div>
+                            <div class="sh-stats-right d-md-none">
+                                <div>ao5: <b id="m-ao5">-</b></div>
+                                <div>ao12: <b id="m-ao12">-</b></div>
+                                <div>ao50: <b id="m-ao50">-</b></div>
+                                <div>ao100: <b id="m-ao100">-</b></div>
                             </div>
                         </div>
 
@@ -114,11 +120,6 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">time</th>
-                            <td id="cur-time">-</td>
-                            <td id="best-time">-</td>
-                        </tr>
-                        <tr>
                             <th scope="row">ao5</th>
                             <td id="cur-ao5">-</td>
                             <td id="best-ao5">-</td>
@@ -128,8 +129,23 @@
                             <td id="cur-ao12">-</td>
                             <td id="best-ao12">-</td>
                         </tr>
+                        <tr>
+                            <th scope="row">ao50</th>
+                            <td id="cur-ao50">-</td>
+                            <td id="best-ao50">-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ao100</th>
+                            <td id="cur-ao100">-</td>
+                            <td id="best-ao100">-</td>
+                        </tr>
                     </tbody>
                 </table>
+                <div class="sh-summary-foot">
+                    <span class="sh-best">best <b id="s-best">-</b></span>
+                    <span>mean <b id="s-mean">-</b></span>
+                    <span>solves <b id="s-solves">0</b></span>
+                </div>
             </section>
 
             <button class="btn btn-outline-warning btn-sm btn-clear d-md-none">Clear all times</button>
